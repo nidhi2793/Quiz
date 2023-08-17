@@ -1,18 +1,5 @@
 let questions = [];
-fetch(
-  "https://quizapi.io/api/v1/questions?apiKey=ZW9Pyi7H4Blq6t1NftyZJs3r8HRsUMKVYUVSubJL&category=code&limit=10"
-)
-  .then((res) => {
-    return res.json();
-  })
-  .then((loadedQuestions) => {
-    console.log(loadedQuestions);
-    questions = loadedQuestions;
-    startQuiz();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+startQuiz();
 
 const questionElement = document.getElementById("question");
 const answerbuttons = document.getElementById("answer-buttons");
@@ -22,7 +9,20 @@ const heading = document.getElementById("heading");
 let currentQuestionIndex = 0;
 let score = 0;
 
-function startQuiz() {
+async function startQuiz() {
+  await fetch(
+    "https://quizapi.io/api/v1/questions?apiKey=ZW9Pyi7H4Blq6t1NftyZJs3r8HRsUMKVYUVSubJL&category=code&limit=10"
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((loadedQuestions) => {
+      console.log(loadedQuestions);
+      questions = loadedQuestions;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   heading.innerHTML = "Simple Quiz";
   currentQuestionIndex = 0;
   score = 0;
